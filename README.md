@@ -25,7 +25,7 @@
 
 | Time Estimate | Name of Feature    | Start Time | Finish Time | Actual Time Needed | Collaborators |
 |:-------------:|:------------------:|------------|-------------|--------------------|---------------|
-|               | CRUD apps w/MongoDB|            |             |                    |               |
+|               | CRUD apps w/MongoDB| 3:25pm     |  3:50pm     |                    |               |
 |               |                    |            |             |                    |               |
 |               |                    |            |             |                    |               |
 |               |                    |            |             |                    |               |
