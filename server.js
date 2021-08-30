@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const Book = require('./models/Book');
 
 const app = express();
 app.use(cors());
@@ -19,15 +20,6 @@ async function main() {
 async function save(book) {
 	await book.save();
 }
-
-const bookSchema = new mongoose.Schema({
-	title: String,
-	description: String,
-	status: String,
-	email: String,
-  });
-
-const Book = mongoose.model('Book', bookSchema);//<-- entity model
 
 const comic = new Book ({ title: 'Preacher', description: 'a preacher, an assassin, and an Irish vampire', status: 'read', email: 'bill@microsoft.com' });
 
