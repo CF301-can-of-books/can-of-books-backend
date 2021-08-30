@@ -10,11 +10,15 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3001;
 
-app.get('/test', (request, response) => {
+main().catch(err => console.log(err));
 
-  response.send('test request received')
+async function main() {
+  await mongoose.connect(process.env.CONNECTION_STRING);
+}
 
-})
+async function save(book) {
+	await book.save();
+}
 
 const bookSchema = new mongoose.Schema({
 	title: String,
@@ -23,7 +27,15 @@ const bookSchema = new mongoose.Schema({
 	email: String,
   });
 
-// const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model('Book', bookSchema);//<-- entity model
 
+const comic = new Book ({ title: 'Preacher', description: 'a preacher, an assassin, and an Irish vampire', status: 'read', email: 'bill@microsoft.com' });
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
+app.get('/test', (request, response) => {
+	save (comic);
+	response.send(comic);
+  
+  })
+  
