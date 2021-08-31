@@ -23,9 +23,15 @@ async function save(book) {
 
 app.get('/test', (request, response) => {
 	console.log('testing');
-	response.send('heller werld');
+	response.send('heller werld from test');
 	// save(comic);
 	// response.send(comic);
+  })
+
+  app.get('/books', (request, response) => {
+	console.log('testing');
+	const email = request.query.email;
+	response.send(email);
   })
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
