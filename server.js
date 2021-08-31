@@ -28,10 +28,10 @@ app.get('/test', (request, response) => {
 	// response.send(comic);
   })
 
-  app.get('/books', (request, response) => {
-	console.log('testing');
+  app.get('/books', async (request, response) => {
 	const email = request.query.email;
-	response.send(email);
+	const books = await Book.find({ email: email })
+	response.send(books);
   })
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
