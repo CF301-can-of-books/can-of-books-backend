@@ -38,4 +38,9 @@ app.get('/books', async (request, response) => {
   response.status(200).send(books);
 });
 
+app.post('/books', async (request, response) => {
+  const newBook = await Book.create(request.body);
+  response.status(201).send(newBook);
+})
+
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
