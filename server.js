@@ -6,32 +6,36 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const seed = require('./seed');
 const Book = require('./models/Book');
+const PORT = process.env.PORT || 3001;
 
 
-mongoose.connect(process.env.CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
-.then(seed());
+console.log(`Connecting with ${process.env.CONNECTION_STRING}.`);
 
+mongoose.connect(process.env.CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
+seed();
 
 const app = express();
 app.use(cors());
-
-const PORT = process.env.PORT || 3001;
+app.use(express.json());
 
 async function save(book) {
-	await book.save();
+  await book.save();
 }
 
-app.get('/test', (request, response) => {
-	console.log('testing');
-	response.send('heller werld from test');
-	// save(comic);
-	// response.send(comic);
-  })
 
-  app.get('/books', async (request, response) => {
-	const email = request.query.email;
-	const books = await Book.find({ email: email })
-	response.send(books);
-  })
+app.get('/test', (request, response) => {
+  console.log('testing');
+  response.send('heller werld from test');
+  // save(comic);
+  // response.send(comic);
+});
+
+app.get('/books', async (request, response) => {
+  const email = request.query.email;
+  const books = await Book.find({email: email});
+  // const books = await Book.find({email: 'bill@microsoft.com'});
+  console.log(books);
+  response.status(200).send(books);
+});
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
