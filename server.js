@@ -39,8 +39,18 @@ app.get('/books', async (request, response) => {
 });
 
 app.post('/books', async (request, response) => {
-  const newBook = await Book.create(request.body);
-  response.status(201).send(newBook);
+  if(!request.body.title || !request.body.description || !request.body.status || !request.body.email) {
+    response.status(400).send('You must include a title and description with your request')
+    return;
+  } 
+
+  try {
+    const newBook = await Book.create(request.body);
+    response.status(201).send(newBook);
+    console.log('Book Added!')
+  } catch(error) {
+    response.status(500).send('Could not create book')
+  }
 })
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
