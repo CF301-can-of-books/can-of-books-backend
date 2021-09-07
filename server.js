@@ -26,14 +26,11 @@ async function save(book) {
 app.get('/test', (request, response) => {
   console.log('testing');
   response.send('heller werld from test');
-  // save(comic);
-  // response.send(comic);
 });
 
 app.get('/books', async (request, response) => {
   const email = request.query.email;
   const books = await Book.find({ email: email });
-  // const books = await Book.find({email: 'bill@microsoft.com'});
   console.log(books);
   response.status(200).send(books);
 });
@@ -66,5 +63,18 @@ app.delete('/books/:id', async (request, response) => {
     response.status(400).send(error);
   }
 });
+
+app.put('/books/:id', async (request, response) => {
+  const id = request.params.id;
+
+  try {
+    const updatedBook = await Book.findByIdAndUpdate(id, request.body, { new:true });
+    response.status(201).send(updatedBook);
+    console.log('Book Updated!')
+  } catch(error) {
+    console.log(error);
+    response.status(400).send(`Unable to update ${request.body.title}`)
+  }
+})
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
